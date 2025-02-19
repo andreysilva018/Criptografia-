@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+class Dados {
+    public String CPF;
+    public String RG;
+    public String Nascimento;
+    public Dados(String CPF,String RG,String Nascimento){
+        this.CPF = CPF;
+        this.RG = RG;
+        this.Nascimento = Nascimento;
+    }
+}
+public class Programa {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Dados[][] contas = new Dados[2][2];
+        for(int i = 0; i < 2;i++){
+            for(int j = 0; j < 2;j++){
+                System.out.println("Digite os dados da conta [" + i + "]  [" + j + "]");
+                System.out.println("Entre com o CPF: ");
+                String CPF = sc.nextLine();
+                System.out.println("Entre com o RG: ");
+                String RG = sc.nextLine();
+                System.out.println("Entre com a data de nascimento: ");
+                String Nascimento = sc.nextLine();
+                contas[i][j] = new Dados(CPF, RG, Nascimento);
+            }
+        }
+        System.out.println("Conta cadastrada com sucesso, qual seria o plano de criptografia: Hroizontal(1) ou Vertical(2)");
+        int pergunta = sc.nextInt();
+        switch(pergunta) {
+        case 1:
+        	int somaHorizontal = 0;
+        	for(int i = 0;i < 2;i++) {
+        		for(int j = 0; j < 2; j++) {
+        			int cpf =  Integer.parseInt(contas[i][j].CPF);
+        			int rg = Integer.parseInt(contas[i][j].RG);
+        			int dN = Integer.parseInt(contas[i][j].Nascimento);
+        			int soma = cpf + rg + dN;
+        			somaHorizontal += soma;
+        		}
+        	}
+    		System.out.println("Valor da soma:" + somaHorizontal);
+        	break;
+        case 2:
+        	int somaVertical = 0;
+        	for(int j = 0;j < 2;j++) {
+        		for(int i = 0; i < 2; i++) {
+        			int cpf =  Integer.parseInt(contas[i][j].CPF);
+        			int rg = Integer.parseInt(contas[i][j].RG);
+        			int dN = Integer.parseInt(contas[i][j].Nascimento);
+        			int soma = cpf + rg + dN;
+        			somaVertical -= soma;
+        		}
+    		}
+    		System.out.println("Valor da soma:" + somaVertical);
+        	break;
+        }
+        System.out.println("Fim do programa");
+        sc.close();
+    }
+}
