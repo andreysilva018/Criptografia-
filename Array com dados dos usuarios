@@ -1,0 +1,19 @@
+Foram criado as arrays para os usuarios entrarem com os dados(CPF, RG, Nascimento).
+
+Falta criar:
+- A quarta é pelos números que representam
+as letras do nome do usuário. Por exemplo, Rafael = 18,1,6,1
+
+E falta criar:
+- O usuário então escolhe uma
+operação matemática e uma direção (horizontal
+ou vertical);
+
+Por exemplo, se o usuário
+selecionou “soma” e “vertical”, você deve somar todos os valores das verticais
+da sua matriz e multiplicar os resultados.
+
+Se o usuário selecionar “subtração”
+e “horizontal”, o sistema deve subtrair os valores em cada linha da matriz e os
+resultados parciais (de cada linha) são multiplicados para chegar à senha
+final.
