@@ -60,3 +60,38 @@ public class Programa {
         sc.close();
     }
 }
+
+
+
+import java.io.IOException;
+import java.util.Scanner;
+class Dados{
+    int idade;
+    public Dados(int idade){
+        this.idade = idade;
+    }
+}
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        double media;
+        System.out.println("Entre com o numero de usuarios: ");
+        int n = sc.nextInt();
+        Dados[] contas = new Dados[n];
+        for(int i =0; i < n; i++){
+            System.out.println("Entre com o idade:");
+            int idade = sc.nextInt();
+            contas[i] = new Dados(idade);
+            /*if(contas.idade < 0){
+                media = contas[i].idade / n - 1;
+                System.out.printf("Media da idade dos usuarios: %.2f", media);
+                i = n +1;
+            }*/
+        }
+        System.out.println("Leitura dos dados");
+        for(int i =0; i < n; i++){
+            System.out.println(contas[i].idade);
+        }
+    }
+}
