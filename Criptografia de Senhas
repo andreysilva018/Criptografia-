@@ -1,0 +1,125 @@
+import java.util.Scanner;
+
+class Dados {
+    public String CPF;
+    public String RG;
+    public String Nascimento;
+    public String name;
+    public Dados(String CPF,String RG,String Nascimento){
+        this.CPF = CPF;
+        this.RG = RG;
+        this.Nascimento = Nascimento;
+    }
+    public Dados(String name) {
+        this.name = name;
+    }
+    public Dados(){}
+    public int[] Converter() {
+        String nomeLimitado = name.length() > 4 ? name.substring(0, 4): name;
+        int[] numeros = new int[nomeLimitado.length()];
+        for(int i =0;i < nomeLimitado.length();i++) {
+            char letra = nomeLimitado.charAt(i);
+            if(Character.isLetter(letra)) {
+                numeros[i] = letra - 'A' + 1;
+            }else {
+                numeros[i] = 0;
+            }
+        }
+        return numeros;
+    }
+    public void Sistema(Scanner sc) {
+        boolean continuar = true;
+        while(continuar){
+        System.out.println("Entre com o nome: ");
+        String name = sc.nextLine().toUpperCase();
+        while (!name.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
+            System.out.println("Nome inválido");
+            System.out.println("Digite um novamente (com apenas letras e espaços): ");
+            name = sc.nextLine();
+        }
+        Dados nomeDados = new Dados(name);
+        int[] numeros = nomeDados.Converter();
+        Dados[][] contas = new Dados[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.println("Entre com o CPF: ");
+                String CPF = sc.nextLine();
+                while (!CPF.matches("^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$")) {
+                    System.out.println("CPF inválido.");
+                    System.out.println("Digite novamente no formato correto (000.000.000-00): ");
+                    CPF = sc.nextLine();
+                }
+                System.out.println("Entre com o RG: ");
+                String RG = sc.nextLine();
+                while (!RG.matches("^\\d{2}\\.\\d{3}\\.\\d{3}-\\d{1}$")) {
+                    System.out.println("CPF inválido.");
+                    System.out.println("Digite novamente no formato correto (000.000.000-00): ");
+                    RG = sc.nextLine();
+                }
+                System.out.println("Entre com a data de nascimento: ");
+                String Nascimento = sc.nextLine();
+                while (!Nascimento.matches("^\\d{2}([/-])\\d{2}\\1\\d{4}$")) {
+                    System.out.println("Data de nascimento inválida.");
+                    System.out.println("Digite novamente no formato correto (DD/MM/AAAA ou DD-MM-AAAA): ");
+                    Nascimento = sc.nextLine();
+                }
+                contas[i][j] = new Dados(CPF, RG, Nascimento);
+                System.out.println("Conta cadastrada com sucesso, qual seria o plano de criptografia: Horizontal(1) ou Vertical(2)");
+                int pergunta = sc.nextInt();
+                switch (pergunta) {
+                    case 1:
+                        int somaHorizontal = 0;
+                        for (i = 0; i < 4; i++) {
+                            for (j = 0; j < 4; j++) {
+                                long cpf = Long.parseLong(CPF.replace(".", "").replace("-", ""));
+                                long rg = Long.parseLong(RG.replace(".", "").replace("-", ""));
+                                long dN = Long.parseLong(Nascimento.replace("/", "").replace("-", ""));
+                                long soma = cpf + rg + dN;
+                                for (int num : numeros) {
+                                    somaHorizontal += soma + num;
+                                }
+                            }
+                        }
+                        System.out.println("Senha Criptografada:" + somaHorizontal);
+                        break;
+                    case 2:
+                        int somaVertical = 0;
+                        for (j = 0; j < 4; j++) {
+                            for (i = 0; i < 4; i++) {
+                                long cpf = Long.parseLong(CPF.replace(".", "").replace("-", ""));
+                                long rg = Long.parseLong(RG.replace(".", "").replace("-", ""));
+                                long dN = Long.parseLong(Nascimento.replace("/", "").replace("-", ""));
+                                long soma = cpf + rg + dN;
+                                for (int num : numeros) {
+                                    somaVertical -= soma - num;
+                                }
+                            }
+                        }
+                        System.out.println("Senha Criptografada:" + somaVertical);
+                        break;
+                    default:
+                        System.out.println("Erro no sistema");
+                        System.out.println("Por favor inserir o comando válido de acordo com a instrução");
+                        break;
+                }
+                System.out.println("Deseja finalizar a criação de contas: ");
+                sc.nextLine().toUpperCase();
+                if (sc.nextLine().equalsIgnoreCase("s")) {
+                    continuar = false;
+                } else {
+                    continuar = true;
+                }
+            }
+        }
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Dados d = new Dados();
+        d.Sistema(sc);
+        System.out.println("/*----------- Fim do programa -----------*/");
+        sc.close();
+    }
+}
